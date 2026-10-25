@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>اعتکاف | ثبت‌نام مراسم</title>
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+<!-- نسخه شخصی‌سازی‌شده برای لندینگ‌پیج «اعتکاف». تاریخ، محل، گروه‌ها و هزینه‌ها باید با اطلاعات رسمی مراسم تکمیل شوند. -->
+<style>
+  :root{
+    --primary:#0b5e4c;
+    --primary-dark:#084536;
+    --gold:#b8913c;
+    --gold-light:#d4b06a;
+    --bg:#fbfbf9;
+    --text:#2c3830;
+    --muted:#6b7a70;
+    --white:#ffffff;
+    --radius:16px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;scroll-padding-top:90px;}
+  body{
+    font-family:'Vazirmatn',Tahoma,sans-serif;
+    background:var(--bg);color:var(--text);line-height:1.8;
+    overflow-x:hidden;
+  }
+  a{text-decoration:none;color:inherit;}
+  ul{list-style:none;}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;}
+
+  /* ================= HEADER ================= */
+  header{
+    position:sticky;top:0;z-index:100;
+    background:var(--white);
+    border-bottom:1px solid rgba(0,0,0,.05);
+    box-shadow:0 4px 20px rgba(0,0,0,.02);
+  }
+  .nav-wrap{
+    max-width:1200px;margin:0 auto;padding:0 24px;
+    display:flex;align-items:center;justify-content:space-between;height:80px;
+  }
+  .logo{
+    display:flex;align-items:center;gap:10px;
+    font-weight:800;font-size:1.3rem;color:var(--primary);
+  }
+  .logo svg{width:36px;height:36px;fill:var(--primary);}
+  
+  .main-nav{display:flex;align-items:center;gap:28px;}
+  .nav-link{
+    font-size:.95rem;font-weight:600;color:var(--text);
+    transition:.2s;position:relative;padding-bottom:4px;
+  }
+  .nav-link:hover, .nav-link.active{color:var(--primary);}
+  .nav-link.active::after{
+    content:"";position:absolute;bottom:0;right:0;left:0;
+    height:2px;background:var(--primary);border-radius:2px;
+  }
+
+  .btn-nav-cta{
+    display:flex;align-items:center;gap:8px;
+    background:var(--primary);color:#fff;
+    padding:10px 24px;border-radius:999px;
+    font-size:.9rem;font-weight:700;transition:.25s;
+  }
+  .btn-nav-cta:hover{background:var(--primary-dark);transform:translateY(-2px);}
+
+  /* ================= HERO ================= */
+  .hero{
+    position:relative;
+    min-height:85vh;
+    display:flex;align-items:center;
+    background:var(--white);
+    overflow:hidden;
+  }
+  .hero-bg-img{
+    position:absolute;
+    top:0;left:0;width:60%;height:100%;
+    background-image:url('assets/hero-mosque.png'); /* تصویر اختصاصی فضای مسجد */
+    background-size:cover;
+    background-position:center left;
+    -webkit-mask-image:linear-gradient(to left, transparent 0%, black 40%);
+    mask-image:linear-gradient(to left, transparent 0%, black 40%);
+  }
+  .hero-bg-img::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(to left, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 80%);
+  }
+
+  .hero-content{
+    position:relative;z-index:2;
+    max-width:1200px;margin:0 auto;padding:80px 24px;
+    width:100%;
+    display:flex;justify-content:flex-start;
+  }
+  .hero-text-box{
+    max-width:600px;
+  }
+  .hero-eyebrow{
+    display:inline-block;
+    font-size:1.1rem;font-weight:700;color:var(--primary);
+    margin-bottom:12px;
+  }
+  .hero-title{
+    font-size:4.5rem;font-weight:900;color:var(--primary);
+    line-height:1.1;margin-bottom:20px;
+    font-family:'Vazirmatn', serif;
+  }
+  .hero-desc{
+    font-size:1.1rem;color:var(--text);line-height:2;
+    margin-bottom:32px;
+  }
+
+  .hero-info-row{
+    display:flex;gap:32px;margin-bottom:32px;
+    flex-wrap:wrap;
+  }
+  .hero-info-item{
+    display:flex;align-items:center;gap:10px;
+    font-size:.9rem;color:var(--text);font-weight:600;
+  }
+  .hero-info-item svg{width:24px;height:24px;fill:var(--primary);}
+  .hero-info-item .val{color:var(--primary);font-weight:800;}
+
+  .btn-hero{
+    display:inline-flex;align-items:center;gap:10px;
+    background:var(--primary);color:#fff;
+    padding:16px 36px;border-radius:999px;
+    font-size:1.1rem;font-weight:700;transition:.3s;
+    box-shadow:0 10px 25px rgba(11,94,76,.25);
+  }
+  .btn-hero:hover{background:var(--primary-dark);transform:translateY(-3px);box-shadow:0 15px 30px rgba(11,94,76,.35);}
+
+  .hero-note{
+    display:block;margin-top:12px;
+    font-size:.8rem;color:var(--muted);
+  }
+
+  /* ================= ABOUT (چرا اعتکاف) ================= */
+  .about-sec{
+    padding:100px 24px;background:var(--white);text-align:center;
+    position:relative;overflow:hidden;
+  }
+  .about-sec::before{
+    content:"";position:absolute;top:-50px;left:-50px;width:300px;height:300px;
+    background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.03"><path d="M50 0 C50 50 100 50 100 100 C100 50 50 50 50 0 Z" fill="%230b5e4c"/></svg>') no-repeat;
+    background-size:cover;transform:rotate(45deg);
+  }
+  .sec-header{max-width:700px;margin:0 auto 50px;}
+  .sec-header .eyebrow{
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    font-size:.95rem;color:var(--muted);margin-bottom:12px;
+  }
+  .sec-header .eyebrow::before, .sec-header .eyebrow::after{
+    content:"";width:40px;height:1px;background:var(--gold);
+  }
+  .sec-header h2{
+    font-size:2.2rem;color:var(--primary);font-weight:800;margin-bottom:16px;
+  }
+  .sec-header p{color:var(--muted);font-size:1rem;}
+
+  .features-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);
+    gap:30px;max-width:1100px;margin:0 auto;
+  }
+  .feature-card{
+    padding:20px;text-align:center;
+  }
+  .feature-icon{
+    width:72px;height:72px;border-radius:50%;
+    display:grid;place-items:center;margin:0 auto 20px;
+    font-size:1.8rem;color:#fff;
+  }
+  /* رنگ‌های آیکون‌ها طبق تصویر */
+  .fi-1{background:#a8d5c4;color:#0b5e4c;}
+  .fi-2{background:#a3c6e8;color:#1e588e;}
+  .fi-3{background:#f4d1d1;color:#b33a3a;}
+  .fi-4{background:#c9e4b4;color:#3b7a2a;}
+
+  .feature-card h3{font-size:1.1rem;color:var(--primary);margin-bottom:10px;font-weight:800;}
+  .feature-card p{font-size:.85rem;color:var(--muted);line-height:1.8;}
+
+  /* ================= TIMER / CTA ================= */
+  .timer-sec{
+    position:relative;
+    padding:80px 24px 100px;
+    background:var(--bg);
+    overflow:hidden;
+  }
+  .timer-wrap{
+    max-width:1100px;margin:0 auto;
+    display:grid;grid-template-columns:1.2fr .8fr;gap:40px;
+    align-items:center;
+  }
+  .timer-image-box{
+    height:400px;border-radius:24px;overflow:hidden;
+    box-shadow:0 20px 50px rgba(0,0,0,.1);
+    background-image:url('assets/dome-mosque.png'); /* تصویر اختصاصی گنبد و مناره */
+    background-size:cover;background-position:center;
+  }
+  .timer-card{
+    background:var(--white);border-radius:24px;
+    padding:40px;box-shadow:0 20px 50px rgba(0,0,0,.06);
+    border:1px solid rgba(11,94,76,.05);
+    text-align:center;
+  }
+  .timer-card h3{
+    font-size:1.4rem;color:var(--primary);margin-bottom:10px;font-weight:800;
+    display:flex;align-items:center;justify-content:center;gap:10px;
+  }
+  .timer-card h3 svg{width:28px;height:28px;fill:var(--primary);}
+  .timer-card p{font-size:.95rem;color:var(--muted);margin-bottom:24px;}
+
+  .timer-boxes{
+    display:flex;justify-content:center;gap:12px;margin-bottom:32px;
+  }
+  .t-box{
+    background:var(--bg);border-radius:12px;padding:16px 12px;
+    min-width:80px;border:1px solid rgba(0,0,0,.03);
+  }
+  .t-box span{
+    display:block;font-size:1.6rem;font-weight:800;color:var(--primary);
+    line-height:1.2;margin-bottom:4px;
+  }
+  .t-box label{font-size:.75rem;color:var(--muted);font-weight:600;}
+
+  .btn-timer{
+    display:inline-flex;align-items:center;justify-content:center;gap:10px;
+    background:var(--primary);color:#fff;
+    padding:14px 40px;border-radius:999px;
+    font-size:1rem;font-weight:700;transition:.25s;
+    width:100%;
+  }
+  .btn-timer:hover{background:var(--primary-dark);}
+
+  /* ================= FOOTER ================= */
+  footer{
+    background:var(--primary-dark);color:#fff;
+    padding:40px 24px;text-align:center;
+    position:relative;overflow:hidden;
+  }
+  .footer-quote{
+    font-size:1.1rem;font-weight:600;margin-bottom:24px;
+    color:rgba(255,255,255,.9);
+  }
+  .footer-logo{
+    display:inline-flex;align-items:center;gap:8px;
+    font-weight:800;font-size:1.2rem;color:#fff;
+  }
+  .footer-logo svg{width:28px;height:28px;fill:#fff;}
+
+  /* ================= WIZARD MODAL ================= */
+  .modal-overlay{
+    position:fixed;inset:0;z-index:1000;
+    background:rgba(10,25,18,.6);backdrop-filter:blur(5px);
+    display:flex;align-items:center;justify-content:center;
+    padding:20px;opacity:0;visibility:hidden;transition:.3s;
+  }
+  .modal-overlay.open{opacity:1;visibility:visible;}
+  .wizard{
+    background:var(--white);border-radius:24px;width:100%;max-width:540px;
+    max-height:92vh;overflow-y:auto;
+    transform:translateY(20px) scale(.97);transition:.3s;
+    position:relative;
+  }
+  .modal-overlay.open .wizard{transform:translateY(0) scale(1);}
+  
+  .wizard-head{padding:26px 28px 0;position:relative;}
+  .wizard-head .close{
+    position:absolute;top:18px;left:18px;width:36px;height:36px;
+    border-radius:50%;background:rgba(0,0,0,.05);color:var(--muted);
+    display:grid;place-items:center;font-size:1.1rem;transition:.2s;
+  }
+  .wizard-head .close:hover{background:rgba(200,0,0,.1);color:red;}
+  .wizard-head h3{font-size:1.3rem;color:var(--primary);font-weight:800;margin-bottom:6px;}
+  .wizard-head p{font-size:.85rem;color:var(--muted);}
+
+  .wizard-body{padding:20px 28px 28px;}
+  .wz-panel{display:none;animation:fadeUp .3s ease;}
+  .wz-panel.active{display:block;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+  .wz-label{display:block;font-size:.85rem;font-weight:700;margin-bottom:8px;}
+  .wz-label .req{color:red;}
+  
+  .select-wrap{position:relative;margin-bottom:20px;}
+  .select-wrap select{
+    width:100%;padding:14px 16px;border-radius:12px;
+    border:1.5px solid rgba(0,0,0,.1);background:var(--bg);
+    font-family:inherit;font-size:.95rem;font-weight:600;color:var(--text);
+    appearance:none;cursor:pointer;transition:.2s;
+  }
+  .select-wrap select:focus{outline:none;border-color:var(--primary);background:#fff;}
+  .select-wrap::after{
+    content:"▾";position:absolute;left:18px;top:50%;transform:translateY(-50%);
+    color:var(--primary);pointer-events:none;font-size:1rem;
+  }
+
+  .group-preview{
+    background:rgba(11,94,76,.04);border:1px dashed rgba(11,94,76,.2);
+    border-radius:12px;padding:16px 18px;margin-bottom:24px;
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .group-preview.empty{justify-content:center;color:var(--muted);font-size:.85rem;}
+  .gp-info strong{display:block;font-size:.95rem;color:var(--primary);}
+  .gp-info span{font-size:.75rem;color:var(--muted);}
+  .gp-price{font-size:1rem;font-weight:800;color:var(--gold);text-align:left;}
+  .gp-price small{display:block;font-size:.7rem;color:var(--primary);}
+
+  .tabs{display:flex;background:rgba(0,0,0,.04);border-radius:12px;padding:4px;margin-bottom:20px;}
+  .tabs button{
+    flex:1;padding:10px;border-radius:9px;font-weight:700;font-size:.9rem;
+    color:var(--muted);transition:.2s;
+  }
+  .tabs button.active{background:var(--white);color:var(--primary);box-shadow:0 2px 8px rgba(0,0,0,.05);}
+
+  .field{margin-bottom:16px;}
+  .field label{display:block;font-size:.85rem;font-weight:700;margin-bottom:6px;}
+  .field input{
+    width:100%;padding:12px 16px;border-radius:10px;
+    border:1.5px solid rgba(0,0,0,.1);background:var(--bg);
+    font-family:inherit;font-size:.95rem;transition:.2s;
+  }
+  .field input:focus{outline:none;border-color:var(--primary);background:#fff;}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+
+  .pay-summary{
+    background:var(--bg);border-radius:14px;padding:20px;margin-bottom:20px;
+  }
+  .ps-row{display:flex;justify-content:space-between;font-size:.9rem;padding:8px 0;border-bottom:1px dashed rgba(0,0,0,.1);}
+  .ps-row:last-child{border-bottom:none;}
+  .ps-row span{color:var(--muted);}
+  .ps-row b{color:var(--text);}
+  .ps-total{display:flex;justify-content:space-between;align-items:center;padding-top:14px;margin-top:8px;border-top:2px solid rgba(0,0,0,.08);}
+  .ps-total span{font-weight:700;color:var(--primary);}
+  .ps-total b{font-size:1.3rem;font-weight:800;color:var(--gold);}
+
+  .pay-method{
+    display:flex;align-items:center;gap:10px;
+    padding:14px;border-radius:12px;border:1.5px solid var(--primary);
+    background:rgba(11,94,76,.04);color:var(--primary);
+    font-weight:700;font-size:.9rem;margin-bottom:20px;
+  }
+
+  .wz-actions{display:flex;gap:10px;margin-top:20px;}
+  .btn-next{
+    flex:1;padding:14px;border-radius:12px;
+    background:var(--primary);color:#fff;font-weight:800;font-size:.95rem;
+    transition:.2s;
+  }
+  .btn-next:hover{background:var(--primary-dark);}
+  .btn-next:disabled{background:#ccc;cursor:not-allowed;}
+  .btn-back{
+    padding:14px 20px;border-radius:12px;
+    background:rgba(0,0,0,.05);color:var(--text);font-weight:700;font-size:.9rem;
+  }
+
+  .success-box{text-align:center;padding:20px 0;}
+  .success-box .icon{
+    width:70px;height:70px;border-radius:50%;background:rgba(11,94,76,.1);
+    color:var(--primary);display:grid;place-items:center;
+    font-size:2rem;margin:0 auto 16px;
+  }
+  .success-box h4{font-size:1.2rem;color:var(--primary);margin-bottom:8px;}
+  .success-box p{font-size:.9rem;color:var(--muted);margin-bottom:16px;}
+  .track{display:inline-block;background:var(--bg);padding:10px 20px;border-radius:8px;font-size:.9rem;margin-bottom:16px;}
+  .track b{color:var(--primary);}
+
+  /* ================= RESPONSIVE ================= */
+  @media(max-width:1024px){
+    .hero-title{font-size:3.5rem;}
+    .features-grid{grid-template-columns:repeat(2,1fr);}
+    .timer-wrap{grid-template-columns:1fr;}
+    .timer-image-box{height:300px;}
+  }
+  @media(max-width:768px){
+    .nav-wrap{flex-wrap:wrap;height:auto;padding:16px;gap:12px;}
+    .main-nav{width:100%;overflow-x:auto;padding-bottom:8px;}
+    .nav-link{white-space:nowrap;}
+    .hero{min-height:auto;flex-direction:column-reverse;}
+    .hero-bg-img{position:relative;width:100%;height:300px;mask-image:none;-webkit-mask-image:none;}
+    .hero-content{padding:40px 20px;justify-content:center;text-align:center;}
+    .hero-title{font-size:2.8rem;}
+    .hero-info-row{justify-content:center;}
+    .features-grid{grid-template-columns:1fr;gap:20px;}
+    .timer-boxes{gap:8px;}
+    .t-box{min-width:65px;padding:12px 8px;}
+    .t-box span{font-size:1.3rem;}
+    .field-row{grid-template-columns:1fr;}
+    .wizard-body{padding:20px;}
+    .wizard-head{padding:20px 20px 0;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header>
+  <div class="nav-wrap">
+    <div class="logo">
+      <!-- SVG لوگو (مسجد + گنبد) -->
+      <svg viewBox="0 0 24 24"><path d="M12 2c-.5 0-1 .5-1 1v1h-1c-1.1 0-2 .9-2 2v2h8V6c0-1.1-.9-2-2-2h-1V3c0-.5-.5-1-1-1zm-4 8v10h2v-5h4v5h2V10H8zm-2 0v10h2V10H6zm12 0v10h2V10h-2z"/></svg>
+      <span>اعتکاف</span>
+    </div>
+    <nav class="main-nav">
+      <a href="#" class="nav-link active">صفحه اصلی</a>
+      <a href="#about" class="nav-link">درباره اعتکاف</a>
+      <a href="#groups" class="nav-link">برنامه‌ها</a>
+      <a href="#groups" class="nav-link">شرایط ثبت نام</a>
+      <a href="#contact" class="nav-link">تماس با ما</a>
+      <button class="btn-nav-cta" onclick="openWizard()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+        ثبت نام در اعتکاف
+      </button>
+    </nav>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="top">
+  <div class="hero-bg-img"></div>
+  <div class="hero-content">
+    <div class="hero-text-box">
+      <span class="hero-eyebrow">فرصتی برای بازگشت به خود...</span>
+      <h1 class="hero-title">اعتکاف</h1>
+      <p class="hero-desc">
+        چند روز فاصله گرفتن از هیاهوی روزمره،<br>
+        در فضای معنوی مسجد، همراه با برنامه‌های فرهنگی و معنوی
+      </p>
+
+      <div class="hero-info-row">
+        <div class="hero-info-item">
+          <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+          <div>
+            <div>زمان برگزاری</div>
+            <div class="val">تاریخ به‌زودی اعلام می‌شود</div>
+          </div>
+        </div>
+        <div class="hero-info-item">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+          <div>
+            <div>مکان برگزاری</div>
+            <div class="val">محل برگزاری به‌زودی اعلام می‌شود</div>
+          </div>
+        </div>
+        <div class="hero-info-item">
+          <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+          <div>
+            <div>ویژه</div>
+            <div class="val">ویژه علاقه‌مندان</div>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-hero" onclick="openWizard()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+        ثبت نام در اعتکاف
+      </button>
+      <span class="hero-note">جزئیات زمان، مکان و ظرفیت پس از اعلام رسمی تکمیل خواهد شد.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section class="about-sec" id="about">
+  <div class="sec-header">
+    <div class="eyebrow">چرا اعتکاف؟</div>
+    <h2>اعتکاف، فرصتی برای بازسازی روح</h2>
+    <p>در دنیای پر از هیاهو، اعتکاف فرصتی است برای فاصله گرفتن از دغدغه‌های روزمره و نزدیک‌تر شدن به خداوند. در این سه روز، با برنامه‌های متنوع فرهنگی، معنوی و آموزشی به آرامش درونی و رشد معنوی دست پیدا می‌کنیم.</p>
+  </div>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon fi-1">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+      </div>
+      <h3>هم‌نشینی با مؤمنان</h3>
+      <p>در کنار دوستان و همفکران با آرامش معنوی بیشتر</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon fi-2">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+      </div>
+      <h3>برنامه‌های ویژه</h3>
+      <p>قرائت قرآن، سخنرانی، جلسات معنوی و ...</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon fi-3">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+      </div>
+      <h3>آرامش و تمرکز</h3>
+      <p>دوری از مشغله‌های روزمره و نزدیکی به خدا</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon fi-4">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+      </div>
+      <h3>رشد فردی و معنوی</h3>
+      <p>تقویت ایمان، اخلاق و سبک زندگی اسلامی</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TIMER / CTA ================= -->
+<section class="timer-sec" id="groups">
+  <div class="timer-wrap">
+    <!-- تصویر گنبد -->
+    <div class="timer-image-box"></div>
+    
+    <!-- باکس تایمر -->
+    <div class="timer-card">
+      <h3>
+        <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+        مهلت ثبت نام
+      </h3>
+      <p>زمان دقیق برگزاری پس از اعلام تاریخ مراسم نمایش داده می‌شود:</p>
+
+      <div class="timer-boxes">
+        <div class="t-box"><span>—</span><label>روز</label></div>
+        <div class="t-box"><span>—</span><label>ساعت</label></div>
+        <div class="t-box"><span>—</span><label>دقیقه</label></div>
+        <div class="t-box"><span>—</span><label>ثانیه</label></div>
+      </div>
+
+      <button class="btn-timer" onclick="openWizard()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+        ثبت نام در اعتکاف
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer id="contact">
+  <div class="footer-quote">« اعتکاف؛ فرصتی برای خلوت با خدا و بازگشت به خویشتن »</div>
+  <div class="footer-logo">
+    <svg viewBox="0 0 24 24"><path d="M12 2c-.5 0-1 .5-1 1v1h-1c-1.1 0-2 .9-2 2v2h8V6c0-1.1-.9-2-2-2h-1V3c0-.5-.5-1-1-1zm-4 8v10h2v-5h4v5h2V10H8zm-2 0v10h2V10H6zm12 0v10h2V10h-2z"/></svg>
+    <span>اعتکاف</span>
+  </div>
+  <div style="margin-top:20px;font-size:0.8rem;opacity:0.6;">© ۱۴۰۵ تمامی حقوق محفوظ است.</div>
+</footer>
+
+<!-- ================= WIZARD MODAL (ثبت نام) ================= -->
+<div class="modal-overlay" id="wizardOverlay" onclick="if(event.target===this)closeWizard()">
+  <div class="wizard" role="dialog" aria-modal="true">
+    <div class="wizard-head">
+      <button class="close" onclick="closeWizard()" aria-label="بستن">✕</button>
+      <h3 id="wzTitle">ثبت نام اعتکاف</h3>
+      <p id="wzSubtitle">در چند گام ثبت نام خود را تکمیل کنید</p>
+    </div>
+
+    <div class="wizard-body">
+      <!-- مرحله ۱: انتخاب گروه -->
+      <div class="wz-panel active" id="panel1">
+        <label class="wz-label" for="groupSelect">دسته‌بندی خود را انتخاب کنید <span class="req">*</span></label>
+        <div class="select-wrap">
+          <select id="groupSelect" onchange="onGroupChange()">
+            <option value="">— انتخاب گروه —</option>
+            <option value="student-tehran">گروه اول — مبلغ پس از اعلام شرایط</option>
+            <option value="student-other">گروه دوم — مبلغ پس از اعلام شرایط</option>
+            <option value="faculty-tehran">گروه سوم — مبلغ پس از اعلام شرایط</option>
+            <option value="faculty-other">گروه چهارم — مبلغ پس از اعلام شرایط</option>
+            <option value="employee">گروه پنجم — مبلغ پس از اعلام شرایط</option>
+            <option value="other">سایر علاقه‌مندان — مبلغ پس از اعلام شرایط</option>
+          </select>
+        </div>
+
+        <div class="group-preview empty" id="groupPreview">
+          لطفاً گروه خود را از منوی بالا انتخاب کنید
+        </div>
+
+        <div class="wz-actions">
+          <button class="btn-next" id="next1" disabled onclick="goToStep(2)">ادامه و احراز هویت ←</button>
+        </div>
+      </div>
+
+      <!-- مرحله ۲: لاگین / ثبت نام -->
+      <div class="wz-panel" id="panel2">
+        <div class="tabs">
+          <button class="active" id="tabLogin" onclick="switchAuthTab('login')">ورود</button>
+          <button id="tabRegister" onclick="switchAuthTab('register')">ثبت نام</button>
+        </div>
+        <div id="authLogin">
+          <div class="field">
+            <label>شماره موبایل <span class="req">*</span></label>
+            <input type="tel" id="loginPhone" placeholder="۰۹۱۲۳۴۵۶۷۸۹" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label>رمز عبور <span class="req">*</span></label>
+            <input type="password" id="loginPass" placeholder="••••••••">
+          </div>
+        </div>
+        <div id="authRegister" style="display:none">
+          <div class="field-row">
+            <div class="field"><label>نام <span class="req">*</span></label><input type="text" id="regFname" placeholder="نام"></div>
+            <div class="field"><label>نام خانوادگی <span class="req">*</span></label><input type="text" id="regLname" placeholder="نام خانوادگی"></div>
+          </div>
+          <div class="field"><label>کد ملی <span class="req">*</span></label><input type="tel" id="regNational" placeholder="۱۰ رقم" inputmode="numeric" maxlength="10"></div>
+          <div class="field"><label>شماره موبایل <span class="req">*</span></label><input type="tel" id="regPhone" placeholder="۰۹۱۲۳۴۵۶۷۸۹" inputmode="numeric"></div>
+          <div class="field"><label>رمز عبور <span class="req">*</span></label><input type="password" id="regPass" placeholder="حداقل ۶ کاراکتر"></div>
+        </div>
+        <div class="wz-actions">
+          <button class="btn-back" onclick="goToStep(1)">← بازگشت</button>
+          <button class="btn-next" onclick="submitAuth()">تایید و ادامه ←</button>
+        </div>
+      </div>
+
+      <!-- مرحله ۳: پرداخت -->
+      <div class="wz-panel" id="panel3">
+        <div class="pay-summary">
+          <div class="ps-row"><span>دسته‌بندی</span><b id="sumGroup">—</b></div>
+          <div class="ps-row"><span>نام و نام خانوادگی</span><b id="sumName">—</b></div>
+          <div class="ps-row"><span>شماره موبایل</span><b id="sumPhone">—</b></div>
+          <div class="ps-total">
+            <span>مبلغ قابل پرداخت</span>
+            <b id="sumPrice">۰ تومان</b>
+          </div>
+        </div>
+
+        <div class="pay-method">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+          مرحله پرداخت (پس از اتصال درگاه بانکی فعال می‌شود)
+        </div>
+
+        <div class="wz-actions">
+          <button class="btn-back" onclick="goToStep(2)">← بازگشت</button>
+          <button class="btn-next" onclick="doPayment()">ادامه آزمایشی ←</button>
+        </div>
+      </div>
+
+      <!-- موفقیت -->
+      <div class="wz-panel" id="panel4">
+        <div class="success-box">
+          <div class="icon">✓</div>
+          <h4>فرم آزمایشی تکمیل شد</h4>
+          <p>این نسخه نمایشی است؛ تأیید نهایی پس از اتصال سامانه ثبت‌نام و پرداخت انجام می‌شود.</p>
+          <div class="track">کد پیگیری: <b id="trackCode">—</b></div>
+          <div class="wz-actions">
+            <button class="btn-next" onclick="closeWizard()">بستن</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ================= داده‌ها =================
+  const GROUPS = {
+    'student-tehran': { title:'گروه اول',   price:1500000 },
+    'student-other':  { title:'گروه دوم', price:2000000 },
+    'faculty-tehran': { title:'گروه سوم',  price:2500000 },
+    'faculty-other':  { title:'گروه چهارم', price:3000000 },
+    'employee':       { title:'گروه پنجم',                  price:3000000 },
+    'other':          { title:'سایر',                      price:4000000 }
+  };
+
+  const state = { step:1, group:'', authMode:'login', user:{ fname:'', lname:'', phone:'' } };
+
+  // ================= منطق ویزارد =================
+  function openWizard(group){
+    resetWizard();
+    if(group){
+      document.getElementById('groupSelect').value = group;
+      onGroupChange();
+    }
+    document.getElementById('wizardOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeWizard(){
+    document.getElementById('wizardOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function resetWizard(){
+    state.step = 1; state.group=''; state.authMode='login';
+    state.user={fname:'',lname:'',phone:''};
+    document.getElementById('groupSelect').value='';
+    document.getElementById('next1').disabled = true;
+    document.getElementById('groupPreview').className = 'group-preview empty';
+    document.getElementById('groupPreview').textContent = 'لطفاً گروه خود را از منوی بالا انتخاب کنید';
+    switchAuthTab('login');
+    ['loginPhone','loginPass','regFname','regLname','regNational','regPhone','regPass']
+      .forEach(id=>document.getElementById(id).value='');
+    goToStep(1);
+  }
+
+  function goToStep(n){
+    state.step = n;
+    document.querySelectorAll('.wz-panel').forEach(p=>p.classList.remove('active'));
+    document.getElementById('panel'+n).classList.add('active');
+
+    const titles = {
+      1:['ثبت نام اعتکاف','دسته‌بندی خود را انتخاب کنید'],
+      2:['احراز هویت','برای ادامه وارد شوید یا ثبت نام کنید'],
+      3:['پرداخت شهریه','اطلاعات ثبت نام و مبلغ را بررسی کنید'],
+      4:['ثبت نام موفق','']
+    };
+    document.getElementById('wzTitle').textContent = titles[n][0];
+    document.getElementById('wzSubtitle').textContent = titles[n][1];
+
+    if(n === 3) fillPaymentSummary();
+  }
+
+  function onGroupChange(){
+    const val = document.getElementById('groupSelect').value;
+    state.group = val;
+    const g = GROUPS[val];
+    const preview = document.getElementById('groupPreview');
+    const nextBtn = document.getElementById('next1');
+
+    if(!g){
+      preview.className='group-preview empty';
+      preview.textContent='لطفاً گروه خود را از منوی بالا انتخاب کنید';
+      nextBtn.disabled = true;
+      return;
+    }
+
+    preview.className='group-preview';
+    const isTehran = val.endsWith('-tehran');
+    const discountBadge = isTehran ? `<small>تخفیف ۵۰۰ هزار تومانی</small>` : '';
+    
+    preview.innerHTML = `
+      <div class="gp-info">
+        <strong>${g.title}</strong>
+        <span>آماده برای احراز هویت</span>
+      </div>
+      <div class="gp-price">${formatPrice(g.price)}${discountBadge}</div>
+    `;
+    nextBtn.disabled = false;
+  }
+
+  function switchAuthTab(mode){
+    state.authMode = mode;
+    document.getElementById('tabLogin').classList.toggle('active', mode==='login');
+    document.getElementById('tabRegister').classList.toggle('active', mode==='register');
+    document.getElementById('authLogin').style.display = mode==='login' ? 'block':'none';
+    document.getElementById('authRegister').style.display = mode==='register' ? 'block':'none';
+  }
+
+  function submitAuth(){
+    if(state.authMode === 'login'){
+      const phone = document.getElementById('loginPhone').value.trim();
+      const pass = document.getElementById('loginPass').value.trim();
+      if(!phone || !pass){ alert('لطفاً شماره موبایل و رمز عبور را وارد کنید.'); return; }
+      state.user = { fname:'کاربر', lname:'محترم', phone: phone };
+    } else {
+      const fname = document.getElementById('regFname').value.trim();
+      const lname = document.getElementById('regLname').value.trim();
+      const national = document.getElementById('regNational').value.trim();
+      const phone = document.getElementById('regPhone').value.trim();
+      const pass = document.getElementById('regPass').value.trim();
+      if(!fname || !lname || !national || !phone || !pass){
+        alert('لطفاً همه فیلدهای الزامی را تکمیل کنید.'); return;
+      }
+      if(national.length !== 10){ alert('کد ملی باید ۱۰ رقم باشد.'); return; }
+      state.user = { fname, lname, phone };
+    }
+    goToStep(3);
+  }
+
+  function fillPaymentSummary(){
+    const g = GROUPS[state.group];
+    document.getElementById('sumGroup').textContent = g.title;
+    document.getElementById('sumName').textContent = state.user.fname + ' ' + state.user.lname;
+    document.getElementById('sumPhone').textContent = state.user.phone || '—';
+    document.getElementById('sumPrice').textContent = formatPrice(g.price);
+  }
+
+  function doPayment(){
+    const code = 'ATK-' + Math.floor(100000 + Math.random()*900000);
+    document.getElementById('trackCode').textContent = code;
+    goToStep(4);
+  }
+
+  function formatPrice(n){ return n.toLocaleString('fa-IR') + ' تومان'; }
+
+  // ================= تایمر شمارش معکوس =================
+  // تنظیم تاریخ هدف (مثلا ۵ روز دیگر برای دمو)
+  // پس از مشخص شدن تاریخ واقعی مراسم، تاریخ هدف را اینجا تنظیم کنید.
+  // نمونه: const targetDate = new Date("2027-02-01T09:00:00");
+  const targetDate = null;
+
+  function updateTimer() {
+    if (!targetDate) return;
+    const now = new Date().getTime();
+    const distance = targetDate.getTime() - now;
+
+    if (distance < 0) return;
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById("t-days").innerText = days.toLocaleString('fa-IR');
+    document.getElementById("t-hours").innerText = hours.toLocaleString('fa-IR');
+    document.getElementById("t-mins").innerText = minutes.toLocaleString('fa-IR');
+    document.getElementById("t-secs").innerText = seconds.toLocaleString('fa-IR');
+  }
+  setInterval(updateTimer, 1000);
+  updateTimer();
+
+  // بستن با ESC
+  document.addEventListener('keydown', e=>{ if(e.key === 'Escape') closeWizard(); });
+</script>
+</body>
+</html>
